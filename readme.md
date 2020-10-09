@@ -4,11 +4,15 @@ Nice wave effect ported from an example made for Adafruit PyBadge/Edgebadge:
 https://github.com/atsamd-rs/atsamd/blob/master/boards/edgebadge/examples/neopixel_easing.rs 
 ported to the Adafruit ItsyBitsy nRF52840 Express (https://learn.adafruit.com/adafruit-itsybitsy-nrf52840-express).
 
+#### __sine\_ease\_in__ function by atsamd-rs team ####
+
 ![ItsyBitsy Neopixel](neopixel_wave.gif)
 
 Uses micromath and SmallRng random numbers generator.
 
 TO DO: add ADC reading to obtain a different seed each time.
+
+
 
 ### HOW TO FLASH:
 

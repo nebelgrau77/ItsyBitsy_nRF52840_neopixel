@@ -22,6 +22,8 @@ use smart_leds::{
     SmartLedsWrite,
     };
 
+use hal::adc::{Adc, AdcConfig};
+
 use rand::prelude::*;
 
 use micromath::F32Ext;
