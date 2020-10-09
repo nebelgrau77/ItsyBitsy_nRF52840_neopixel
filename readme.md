@@ -4,6 +4,8 @@ Ported to the Adafruit ItsyBitsy nRF52840 Express board (https://learn.adafruit.
 * https://github.com/smart-leds-rs/smart-leds-samples/blob/master/trinket-m0-examples/examples/trinket_apa102_onboard_blink.rs
 * https://github.com/nrf-rs/nrf-hal/blob/master/examples/spi-demo/src/main.rs
 
+![ItsyBitsy Neopixel](neopixel.gif)
+
 ### HOW TO FLASH:
 
 * build the code: ```cargo build --release```
