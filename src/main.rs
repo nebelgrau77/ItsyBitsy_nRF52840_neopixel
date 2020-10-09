@@ -12,6 +12,8 @@ use hal::delay::Delay;
 
 use hal::spim::Spim;
 
+use hal::rng;
+
 use cortex_m_rt::entry;
 
 use apa102_spi as apa102;
@@ -21,10 +23,6 @@ use smart_leds::{
     hsv::{hsv2rgb, Hsv},
     SmartLedsWrite,
     };
-
-use hal::adc::{Adc, AdcConfig};
-
-use rand::prelude::*;
 
 use micromath::F32Ext;
 use core::f32::consts::FRAC_PI_2;
@@ -59,13 +57,13 @@ fn main() -> ! {
 
     let mut dotstar = Apa102::new(spi);
     
-    let seed = 0x1337_d00d_8d34_dee7; //trying to spell "leet dood ain't dead yet" LOL
-
-    let mut rng = SmallRng::seed_from_u64(seed);
-
+    let mut rng = rng::Rng::new(p.RNG);
     
     loop {
-        let rand = rng.next_u64() as u8;
+        
+        let rand = rng.random_u8();
+        
+        //let rand = rng.next_u64() as u8;
 
         //slowly enable led
         for j in 0..255u8 {
@@ -97,7 +95,6 @@ fn main() -> ! {
     }
     
 }
-
 
 #[inline]
 // current step, where oputput starts, where output ends, last step

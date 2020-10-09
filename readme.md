@@ -8,12 +8,6 @@ ported to the Adafruit ItsyBitsy nRF52840 Express (https://learn.adafruit.com/ad
 
 ![ItsyBitsy Neopixel](neopixel_wave.gif)
 
-Uses micromath and SmallRng random numbers generator.
-
-TO DO: add ADC reading to obtain a different seed each time.
-
-
-
 ### HOW TO FLASH:
 
 * build the code: ```cargo build --release```
