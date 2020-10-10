@@ -82,7 +82,7 @@ fn main() -> ! {
             delay.delay_ms(5u8);
         }
 
-        //slowly enable led
+        //slowly disable led
         for j in (0..255u8).rev() {
             
             let color: [RGB8; 1] = [hsv2rgb(Hsv {
