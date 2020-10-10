@@ -1,12 +1,7 @@
-### APA102 WAVE EXAMPLE
+### APA102 HUE SHIFT EXAMPLE
 
-Nice wave effect ported from an example made for Adafruit PyBadge/Edgebadge:
-https://github.com/atsamd-rs/atsamd/blob/master/boards/edgebadge/examples/neopixel_easing.rs 
-ported to the Adafruit ItsyBitsy nRF52840 Express (https://learn.adafruit.com/adafruit-itsybitsy-nrf52840-express).
-
-#### __sine\_ease\_in__ function by atsamd-rs team ####
-
-![ItsyBitsy Neopixel](neopixel_wave.gif)
+NeoPixel changing hue around the colorwheel :) 
+Target: Adafruit ItsyBitsy nRF52840 Express (https://learn.adafruit.com/adafruit-itsybitsy-nrf52840-express).
 
 ### HOW TO FLASH:
 
