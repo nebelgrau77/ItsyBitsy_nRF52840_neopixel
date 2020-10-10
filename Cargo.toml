@@ -1,5 +1,5 @@
 [package]
-name = "blinky_neopixel"
+name = "neopixel"
 version = "0.1.0"
 authors = ["nebelgrau77"]
 edition = "2018"
@@ -15,10 +15,6 @@ panic-halt = "~0.2"
 smart-leds = "0.3"
 smart-leds-trait = "0.2"
 apa102-spi = "0.3"
-
-micromath = "0.5.1"
-
-rand = {version = "0.7.3", default-features = false, features = [ "small_rng" ]}
 
 [dependencies.embedded-hal]
 version = "0.2.3"

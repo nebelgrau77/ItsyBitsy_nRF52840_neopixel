@@ -9,23 +9,16 @@ use hal::pac::{CorePeripherals, Peripherals};
 use hal::prelude::*;
 use hal::gpio::Level;
 use hal::delay::Delay;
-
 use hal::spim::Spim;
-
-use hal::rng;
 
 use cortex_m_rt::entry;
 
-use apa102_spi as apa102;
-use apa102::Apa102;
+use apa102_spi::Apa102;
 use smart_leds_trait::RGB8;
 use smart_leds::{
     hsv::{hsv2rgb, Hsv},
     SmartLedsWrite,
     };
-
-use micromath::F32Ext;
-use core::f32::consts::FRAC_PI_2;
 
 #[entry]
 fn main() -> ! {
@@ -33,18 +26,22 @@ fn main() -> ! {
     let p = Peripherals::take().unwrap();
     let core = CorePeripherals::take().unwrap();
 
+    // set up GPIO ports
     let port0 = hal::gpio::p0::Parts::new(p.P0);
     let port1 = hal::gpio::p1::Parts::new(p.P1);
     
+    // set up pins for the NeoPixel 
     let di = port0.p0_08.into_push_pull_output(Level::Low).degrade(); // data line
     let ci = port1.p1_09.into_push_pull_output(Level::Low).degrade(); // clock
     let nc = port1.p1_14.into_floating_input().degrade(); // not connected
 
+    // use these pins for the SPI bus
     let pins = hal::spim::Pins{
                 sck: ci, 
                 miso: Some(nc), 
                 mosi: Some(di)};
 
+    // set up SPI                
     let spi = Spim::new(
         p.SPIM2,
         pins,
@@ -53,51 +50,27 @@ fn main() -> ! {
         0,
     );
 
+    // initialize a delay provider
     let mut delay = Delay::new(core.SYST);
 
+    // set up the NeoPixel
     let mut dotstar = Apa102::new(spi);
-    
-    let mut rng = rng::Rng::new(p.RNG);
-    
+        
     loop {
         
-        let rand = rng.random_u8();
-        
-        //let rand = rng.next_u64() as u8;
-
-        //slowly enable led
-        for j in 0..255u8 {
+        // shift hue around the color wheel
+        for h in 0..255u8 {
             
-            let color: [RGB8; 1] = [hsv2rgb(Hsv {
-                                    hue: rand,
+            let color: [RGB8; 1] = [hsv2rgb(Hsv {                                    
+                                    hue: h,
                                     sat: 255,
-                                    val: sine_ease_in(j as f32, 0.0, 32.0, 255.0) as u8,
+                                    val: 16,
                                     })];
 
             dotstar.write(color.iter().cloned()).unwrap();
             
             delay.delay_ms(5u8);
-        }
-
-        //slowly enable led
-        for j in (0..255u8).rev() {
-            
-            let color: [RGB8; 1] = [hsv2rgb(Hsv {
-                                    hue: rand,
-                                    sat: 255,
-                                    val: sine_ease_in(j as f32, 0.0, 32.0, 255.0) as u8,
-                                    })];
-
-            dotstar.write(color.iter().cloned()).unwrap();
-            
-            delay.delay_ms(5u8);
-        }
+        }        
     }
     
-}
-
-#[inline]
-// current step, where oputput starts, where output ends, last step
-fn sine_ease_in(t: f32, b: f32, c: f32, d: f32) -> f32 {
-    -c * (t / d * FRAC_PI_2).cos() + c + b
 }
