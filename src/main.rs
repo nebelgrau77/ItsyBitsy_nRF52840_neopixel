@@ -5,12 +5,10 @@ use panic_halt as _;
 
 use nrf52840_hal as hal;
 
-use hal::{pac::{
-            //CorePeripherals, 
+use hal::{pac::{            
             Peripherals},
         prelude::*,
-        gpio::Level,
-        //delay::Delay,
+        gpio::Level,        
         spim::Spim,
         rtc::{Rtc, RtcCompareReg, RtcInterrupt},        
         };
@@ -28,6 +26,7 @@ use smart_leds::{
 const PXL_SATURATION: u8 = 255;
 const PXL_VALUE: u8 = 12; // how bright the NeoPixel is
 const PXL_HUE_STEP: u8 = 32; //the smaller the step, the more hues
+const PXL_HUE_PHASE: u8 = 16; //shifted by this amount from the inital value
 
 #[entry]
 fn main() -> ! {
@@ -73,7 +72,7 @@ fn main() -> ! {
         
     rtc.enable_counter(); // start the RTC
 
-    let mut pxl_hue: u8 = 0; //starting hue
+    let mut pxl_hue: u8 = PXL_HUE_PHASE; //starting hue
 
     loop {
 
